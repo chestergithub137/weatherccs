@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(to bottom, #8403dfd2, #f0f8ff);
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 400px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      max-width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      max-width: 100%;
+      padding: 12px;
+      background-color: #8403dfd2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      box-sizing: border-box;
+    }
+    button:hover {
+      background-color: #04cf26c4;
+    }
+    .weather-info {
+      margin-top: 20px;
+      text-align: left;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .forecast-container {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f0f8ff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row; /* Display items in a row */
+    gap: 10px; /* Add spacing between items */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent items from wrapping */
+    text-align: left !important; /* Align text to the left */
+    }
+    .forecast-item {
+      flex: 0 0 auto; /* Prevent items from shrinking */
+      padding: 10px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      text-align: center; /* Center-align text */
+      min-width: 120px; /* Set a minimum width for each item */
+    }
+    .forecast-item p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    .recommendation-details {
+    text-align: left; /* Align text to the left */
+    margin-top: 20px; /* Add some spacing from the previous section */
+    padding: 15px; /* Add padding for better readability */
+    background: #f9f9f9; /* Light background for contrast */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
+
+    .dropdown {
+    width: 100%; /* Make the dropdown take the full width of the container */
+    max-width: 100%; /* Ensure it doesn't exceed the container width */
+    padding: 12px; /* Add padding for better usability */
+    margin-bottom: 15px; /* Add spacing below the dropdown */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 8px; /* Rounded corners */
+    font-size: 16px; /* Adjust font size */
+    background-color: #f9f9f9; /* Light background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    appearance: none; /* Remove default browser styling */
+    cursor: pointer; /* Change cursor to pointer */
+    }
+
+    .dropdown:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: #8403dfd2; /* Highlight border on focus */
+    box-shadow: 0 0 5px rgba(132, 3, 223, 0.5); /* Add focus shadow */
+    }
+    
+  </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Forecast</h1>
+        <!-- Dropdown for cities and municipalities -->
+        <select id="location" class="dropdown">
+            <option value="Kabankalan, PH">Kabankalan</option>
+            <option value="Bacolod, PH">Bacolod</option>
+            <option value="Bago, PH">Bago</option>
+            <option value="Cadiz, PH">Cadiz</option>
+            <option value="Escalante, PH">Escalante</option>
+            <option value="Himamaylan, PH">Himamaylan</option>
+            <option value="La Carlota, PH">La Carlota</option>
+            <option value="Sagay, PH">Sagay</option>
+            <option value="San Carlos, PH">San Carlos</option>
+            <option value="Silay, PH">Silay</option>
+            <option value="Sipalay, PH">Sipalay</option>
+            <option value="Talisay, PH">Talisay</option>
+            <option value="Victorias, PH">Victorias</option>
+            <option value="Calatrava, PH">Calatrava</option>
+            <option value="Cauayan, PH">Cauayan</option>
+            <option value="Enrique B. Magalona, PH">Enrique B. Magalona</option>
+            <option value="Hinigaran, PH">Hinigaran</option>
+            <option value="Hinoba-an, PH">Hinoba-an</option>
+            <option value="Ilog, PH">Ilog</option>
+            <option value="Isabela, PH">Isabela</option>
+            <option value="La Castellana, PH">La Castellana</option>
+            <option value="Manapla, PH">Manapla</option>
+            <option value="Moises Padilla, PH">Moises Padilla</option>
+            <option value="Murcia, PH">Murcia</option>
+            <option value="Pontevedra, PH">Pontevedra</option>
+            <option value="Pulupandan, PH">Pulupandan</option>
+            <option value="Salvador Benedicto, PH">Salvador Benedicto</option>
+            <option value="San Enrique, PH">San Enrique</option>
+            <option value="Toboso, PH">Toboso</option>
+            <option value="Valladolid, PH">Valladolid</option>
+        </select>
+        <button onclick="getWeather()">Check Weather</button>
+        <div class="weather-info" id="weatherInfo"></div>
+        <div class="recommendation" id="recommendation"></div>
+        <div class="forecast-info" id="forecastInfo"></div>
+    </div>
+    
+    <script>
+        async function getWeather() {
+            const location = document.getElementById('location').value;
+            const apiKey = '0f0c2dcbdfe45dbcf40b10671fd0cde2'; // Replace with your OpenWeatherMap API key
+            const weatherInfo = document.getElementById('weatherInfo');
+            const forecastInfo = document.getElementById('forecastInfo');
+            const recommendation = document.getElementById('recommendation'); // Added this
+    
+            if (!location) {
+                weatherInfo.innerHTML = '<p>Palihog sulata ang lugar.</p>';
+                return;
+            }
+    
+            try {
+                // Fetch current weather
+                const response = await fetch(
+                    `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=metric`
+                );
+                const data = await response.json();
+    
+                // Fetch forecast data
+                const forecastResponse = await fetch(
+                    `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${apiKey}&units=metric`
+                );
+                const forecastData = await forecastResponse.json();
+    
+                if (data.cod === 200) {
+    // Display current weather
+
+    // Mapping of weather conditions to Hiligaynon
+const weatherDescriptions = {
+    clear: 'Matin-aw',
+    clouds: 'Maulanon',
+    rain: 'Ulanon',
+    drizzle: 'Pag-ulan-ulan',
+    thunderstorm: 'Bagyo',
+    snow: 'Niyebe',
+    mist: 'Hamog',
+    haze: 'Alisngaw',
+    fog: 'Hamog nga madalom',
+    smoke: 'Aso',
+    dust: 'Alikabok',
+    sand: 'Balas',
+    ash: 'Abo',
+    squall: 'Paghuros sang hangin',
+    tornado: 'Alimpulos'
+};
+
+const condition = data.weather[0].main.toLowerCase();
+const descriptionHiligaynon = weatherDescriptions[condition] || data.weather[0].description;
+
+weatherInfo.innerHTML = `
+    <div class="weather-details">
+        <p><strong>📍 Lugar:</strong> ${data.name}, ${data.sys.country}</p>
+        <p><strong>🌡️ Temperatura:</strong> ${data.main.temp}°C</p>
+        <p><strong>🌤️ Kondisyon:</strong> ${descriptionHiligaynon}</p>
+        <p><strong>💨 Kusog sang Hangin:</strong> ${data.wind.speed} m/s</p>
+    </div>
+`;
+
+    // Generate recommendation based on weather data
+  // Generate recommendation based on temperature data
+let recommendationText = '';
+if (data.main.temp > 35) {
+    recommendationText =
+        '☀️ Mainit gid ang panahon. Maghalong sa init kag mag-inom sang madamo nga tubig. Likawan ang pagtrabaho sa tunga sang init sang adlaw.';
+} else if (data.main.temp > 30) {
+    recommendationText =
+        '☀️ Mainit ang panahon. Mag-irigasyon sa mga tanom kag maghalong sa init. Magpili sang maathag nga oras para magtrabaho.';
+} else if (data.main.temp > 20) {
+    recommendationText =
+        '🌤️ Maayo ang panahon. Ini ang husto nga oras para magtanom ukon mag-ani. Siguraduhon nga may husto nga tubig ang mga tanom.';
+} else if (data.main.temp > 10) {
+    recommendationText =
+        '❄️ Mabugnaw ang panahon. Protektahi ang mga tanom nga sensitibo kag magpokus sa mga aktibidad sa greenhouse.';
+} else {
+    recommendationText =
+        '❄️ Mabugnaw gid ang panahon. Maghalong sa katugnaw kag siguruhon nga protektado ang mga tanom batok sa lamig.';
+}
+
+// Display recommendation
+recommendation.innerHTML = `
+    <h2>Mga Rekomendasyon</h2>
+    <div class="recommendation-details">
+        <p>${recommendationText}</p>
+    </div>
+`;
+
+    // Extract forecast for tomorrow
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowDate = tomorrow.toISOString().split('T')[0];
+
+    const tomorrowForecast = forecastData.list.filter((item) =>
+        item.dt_txt.startsWith(tomorrowDate)
+    );
+
+    // Display forecast for tomorrow
+    forecastInfo.innerHTML = `
+            <h2>Status sang Panahon Buwas</h2> 
+            <div class="forecast-container">
+            ${tomorrowForecast
+                .map(
+                    (item) => {
+                        const time = new Date(item.dt_txt).toLocaleTimeString([], {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true, // Enable 12-hour format
+                        });
+                        return `
+                        <div class="forecast-item">
+                            <p><strong>🕒 Time:</strong> ${time}</p>
+                            <p><strong>🌡️ Temp:</strong> ${item.main.temp}°C</p>
+                          <p><strong>🌤️ Kondisyon:</strong> ${descriptionHiligaynon}</p>
+                        </div>
+                        `;
+                    }
+                )
+                .join('')}
+        </div>
+    `;
+}
+   else {
+                    weatherInfo.innerHTML = `<p>${data.message}</p>`;
+                }
+            } catch (error) {
+                weatherInfo.innerHTML = `<p>May problema sa pagkuha sang datos sang panahon. Detalye: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
