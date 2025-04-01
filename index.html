@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="CCS OFFICIAL SEAL.png" type="image/png">
   <title>Weather App</title>
   <style>
     body {
@@ -116,11 +117,19 @@
     border-color: #8403dfd2; /* Highlight border on focus */
     box-shadow: 0 0 5px rgba(132, 3, 223, 0.5); /* Add focus shadow */
     }
+
+    .logo {
+    display: block;
+    margin: 0 auto 0px; /* Center the logo and add spacing below */
+    max-width: 100px; /* Set a smaller maximum width for the logo */
+    height: auto; /* Maintain aspect ratio */
+    }
     
   </style>
 </head>
 <body>
     <div class="container">
+        <img src="CCS OFFICIAL SEAL.png" alt="CCS Official Seal" class="logo" />
         <h1>Weather Forecast</h1>
         <!-- Dropdown for cities and municipalities -->
         <select id="location" class="dropdown">
